@@ -14,10 +14,10 @@ import org.springframework.http.HttpStatus;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ErrorResponse {
     HttpStatus status;
     int statusCode;
