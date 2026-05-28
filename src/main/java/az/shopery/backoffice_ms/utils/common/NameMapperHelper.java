@@ -1,9 +1,8 @@
 package az.shopery.backoffice_ms.utils.common;
 
+import java.util.Arrays;
 import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Arrays;
 
 @UtilityClass
 public class NameMapperHelper {

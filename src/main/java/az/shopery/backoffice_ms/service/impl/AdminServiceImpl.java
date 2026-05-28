@@ -2,7 +2,6 @@ package az.shopery.backoffice_ms.service.impl;
 
 import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.first;
 import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.last;
-import static az.shopery.backoffice_ms.utils.common.UuidUtils.parse;
 
 import az.shopery.backoffice_ms.client.AwsClient;
 import az.shopery.backoffice_ms.handler.exception.ApplicationException;
@@ -38,6 +37,7 @@ import az.shopery.backoffice_ms.utils.enums.UserStatus;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -184,6 +184,14 @@ public class AdminServiceImpl implements AdminService {
         }
 
         return shopCreationRequestEntity;
+    }
+
+    private UUID parse(String uuidString) {
+        try {
+            return UUID.fromString(uuidString.trim());
+        } catch (IllegalArgumentException exception) {
+            throw new ApplicationException("It is not a valid UUID format!");
+        }
     }
 
     private UserProfileResponseDto mapToDto(UserEntity userEntity) {

@@ -1,8 +1,12 @@
 package az.shopery.backoffice_ms.model.dto.response.task;
 
-import az.shopery.utils.enums.RequestStatus;
-import az.shopery.utils.enums.SubscriptionTier;
-import lombok.*;
+import az.shopery.backoffice_ms.utils.enums.RequestStatus;
+import az.shopery.backoffice_ms.utils.enums.SubscriptionTier;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 

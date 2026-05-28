@@ -1,20 +1,23 @@
 package az.shopery.backoffice_ms.model.dto.response;
 
-import az.shopery.utils.enums.ShopStatus;
-import az.shopery.utils.enums.SubscriptionTier;
-import az.shopery.utils.enums.UserStatus;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
-
+import az.shopery.backoffice_ms.utils.enums.ShopStatus;
+import az.shopery.backoffice_ms.utils.enums.SubscriptionTier;
+import az.shopery.backoffice_ms.utils.enums.UserStatus;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-@Builder
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AdminShopResponseDto {
     UUID id;
     String shopName;

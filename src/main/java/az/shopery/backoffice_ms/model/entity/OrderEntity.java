@@ -1,28 +1,42 @@
 package az.shopery.backoffice_ms.model.entity;
 
-import az.shopery.utils.enums.OrderStatus;
-import jakarta.persistence.*;
-import lombok.*;
+import az.shopery.backoffice_ms.utils.enums.OrderStatus;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.UuidGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.math.BigDecimal;
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
-
 @Entity
-@Table(name = "orders")
-@EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "orders")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@EntityListeners(AuditingEntityListener.class)
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,8 +64,6 @@ public class OrderEntity {
     String country;
     @Column(name = "postal_code", nullable = false)
     String postalCode;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<OrderItemEntity> items;
     @Builder.Default
     @Column(name = "is_user_notified", nullable = false)
     Boolean isUserNotified = Boolean.FALSE;

@@ -1,6 +1,6 @@
 package az.shopery.backoffice_ms.model.dto.response;
 
-import az.shopery.model.dto.shared.ShopSummaryDto;
+import az.shopery.backoffice_ms.model.dto.shared.ShopSummaryDto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

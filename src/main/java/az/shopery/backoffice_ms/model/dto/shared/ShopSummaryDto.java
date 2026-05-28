@@ -1,6 +1,7 @@
-package az.shopery.backoffice_ms.model.dto.request;
+package az.shopery.backoffice_ms.model.dto.shared;
 
-import jakarta.validation.constraints.NotBlank;
+import az.shopery.backoffice_ms.utils.enums.ShopStatus;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ShopCreationRequestRejectDto {
-    @NotBlank(message = "reason cannot be blank!")
-    String reason;
+public class ShopSummaryDto {
+    UUID id;
+    String shopName;
+    ShopStatus status;
 }
