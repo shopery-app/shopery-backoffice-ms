@@ -1,18 +1,27 @@
 package az.shopery.backoffice_ms.model.entity.task;
 
-import az.shopery.utils.enums.TicketStatus;
-import jakarta.persistence.*;
-import lombok.*;
+import az.shopery.backoffice_ms.utils.enums.TicketStatus;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@DiscriminatorValue("SUPPORT_TICKET")
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@DiscriminatorValue("SUPPORT_TICKET")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SupportTicketEntity extends TaskEntity {
     @Column(name = "subject", nullable = false)

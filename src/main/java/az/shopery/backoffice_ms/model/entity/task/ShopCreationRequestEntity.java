@@ -1,20 +1,29 @@
 package az.shopery.backoffice_ms.model.entity.task;
 
-import az.shopery.utils.enums.RequestStatus;
-import az.shopery.utils.enums.SubscriptionTier;
-import jakarta.persistence.*;
-import lombok.*;
+import az.shopery.backoffice_ms.utils.enums.RequestStatus;
+import az.shopery.backoffice_ms.utils.enums.SubscriptionTier;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 @Entity
-@DiscriminatorValue("SHOP_CREATION_REQUEST")
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@DiscriminatorValue("SHOP_CREATION_REQUEST")
 public class ShopCreationRequestEntity extends TaskEntity {
     @Column(name = "shop_name", nullable = false)
     String shopName;
