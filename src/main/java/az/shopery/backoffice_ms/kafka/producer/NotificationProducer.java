@@ -1,6 +1,6 @@
 package az.shopery.backoffice_ms.kafka.producer;
 
-import az.shopery.model.event.NotificationEvent;
+import az.shopery.backoffice_ms.model.event.NotificationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;

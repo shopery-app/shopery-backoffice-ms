@@ -1,8 +1,8 @@
 package az.shopery.backoffice_ms.model.dto.projection;
 
-import az.shopery.utils.enums.ShopStatus;
-import az.shopery.utils.enums.SubscriptionTier;
-import az.shopery.utils.enums.UserStatus;
+import az.shopery.backoffice_ms.utils.enums.ShopStatus;
+import az.shopery.backoffice_ms.utils.enums.SubscriptionTier;
+import az.shopery.backoffice_ms.utils.enums.UserStatus;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;

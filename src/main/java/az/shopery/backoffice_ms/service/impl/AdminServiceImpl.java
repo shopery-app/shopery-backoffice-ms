@@ -1,5 +1,9 @@
 package az.shopery.backoffice_ms.service.impl;
 
+import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.first;
+import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.last;
+import static az.shopery.backoffice_ms.utils.common.UuidUtils.parse;
+
 import az.shopery.backoffice_ms.client.AwsClient;
 import az.shopery.backoffice_ms.handler.exception.ApplicationException;
 import az.shopery.backoffice_ms.handler.exception.ResourceNotFoundException;
@@ -23,20 +27,22 @@ import az.shopery.backoffice_ms.repository.ShopRepository;
 import az.shopery.backoffice_ms.repository.TaskRepository;
 import az.shopery.backoffice_ms.repository.UserRepository;
 import az.shopery.backoffice_ms.service.AdminService;
-import az.shopery.backoffice_ms.utils.enums.*;
+import az.shopery.backoffice_ms.utils.enums.NotificationType;
+import az.shopery.backoffice_ms.utils.enums.OrderStatus;
+import az.shopery.backoffice_ms.utils.enums.RequestStatus;
+import az.shopery.backoffice_ms.utils.enums.ShopStatus;
+import az.shopery.backoffice_ms.utils.enums.TaskCategory;
+import az.shopery.backoffice_ms.utils.enums.TicketStatus;
+import az.shopery.backoffice_ms.utils.enums.UserRole;
+import az.shopery.backoffice_ms.utils.enums.UserStatus;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-
-import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.first;
-import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.last;
-import static az.shopery.backoffice_ms.utils.common.UuidUtils.parse;
 
 @Service
 @RequiredArgsConstructor
