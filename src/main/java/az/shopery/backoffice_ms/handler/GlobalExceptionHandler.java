@@ -1,25 +1,23 @@
 package az.shopery.backoffice_ms.handler;
 
-import az.shopery.handler.exception.*;
-import az.shopery.model.dto.shared.ErrorResponse;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import io.github.resilience4j.ratelimiter.RequestNotPermitted;
+import az.shopery.backoffice_ms.handler.exception.ApplicationException;
+import az.shopery.backoffice_ms.handler.exception.ResourceNotFoundException;
+import az.shopery.backoffice_ms.model.dto.shared.ErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.util.HtmlUtils;
-
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import tools.jackson.databind.exc.InvalidFormatException;
 
 @Slf4j
 @RestControllerAdvice
@@ -35,33 +33,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handleBadRequest(Exception ex, HttpServletRequest request) {
         log.debug("Bad request: {}", ex.getMessage());
         return buildErrorResponse(ex, HttpStatus.BAD_REQUEST, request);
-    }
-
-    @ExceptionHandler({InvalidCredentialsException.class, JwtAuthenticationException.class})
-    public ResponseEntity<ErrorResponse> handleUnauthorized(Exception ex, HttpServletRequest request) {
-        log.debug("Authentication failed: {}", ex.getMessage());
-        return buildErrorResponse(ex, HttpStatus.UNAUTHORIZED, request);
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<ErrorResponse> handleForbidden(AccessDeniedException ex, HttpServletRequest request) {
-        log.debug("Access denied: {}", ex.getMessage());
-        return buildErrorResponse(ex, HttpStatus.FORBIDDEN, request);
-    }
-
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse> handleConflict(Exception ex, HttpServletRequest request) {
-        log.debug("Conflict: {}", ex.getMessage());
-        return buildErrorResponse(ex, HttpStatus.CONFLICT, request);
-    }
-
-    @ExceptionHandler({CooldownNotMetException.class, RequestNotPermitted.class})
-    public ResponseEntity<ErrorResponse> handleTooManyRequests(Exception ex, HttpServletRequest request) {
-        log.debug("Rate limit exceeded: {}", ex.getMessage());
-        String message = ex instanceof RequestNotPermitted
-                ? "Rate limit exceeded, please try again later!"
-                : ex.getMessage();
-        return buildErrorResponse(new RuntimeException(message, ex), HttpStatus.TOO_MANY_REQUESTS, request);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -88,7 +59,7 @@ public class GlobalExceptionHandler {
                         error -> HtmlUtils.htmlEscape(Objects.nonNull(error.getDefaultMessage())
                                 ? error.getDefaultMessage()
                                 : "Invalid value!"),
-                        (existing, replacement) -> existing
+                        (existing, _) -> existing
                 ));
 
         ErrorResponse errorResponse = ErrorResponse.builder()
@@ -101,22 +72,6 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(FileStorageException.class)
-    public ResponseEntity<ErrorResponse> handleFileStorage(FileStorageException ex, HttpServletRequest request) {
-        if (Objects.nonNull(ex.getMessage()) && ex.getMessage().contains("empty file")) {
-            log.debug("Empty file upload attempt");
-            return buildErrorResponse(ex, HttpStatus.BAD_REQUEST, request);
-        }
-        log.error("File storage error: ", ex);
-        return buildErrorResponse(ex, HttpStatus.INTERNAL_SERVER_ERROR, request);
-    }
-
-    @ExceptionHandler(ExternalServiceException.class)
-    public ResponseEntity<ErrorResponse> handleExternalService(ExternalServiceException ex, HttpServletRequest request) {
-        log.error("External service error: {}", ex.getMessage(), ex);
-        return buildErrorResponse(ex, HttpStatus.SERVICE_UNAVAILABLE, request);
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,14 +1,14 @@
 package az.shopery.backoffice_ms.mapper;
 
-import az.shopery.handler.exception.ApplicationException;
-import az.shopery.model.dto.response.task.ShopCreationRequestResponseDto;
-import az.shopery.model.dto.response.task.SupportTicketResponseDto;
-import az.shopery.model.dto.response.task.TaskResponseDto;
-import az.shopery.model.dto.shared.TaskCreatorDto;
-import az.shopery.model.entity.task.ShopCreationRequestEntity;
-import az.shopery.model.entity.task.SupportTicketEntity;
-import az.shopery.model.entity.task.TaskEntity;
-import az.shopery.utils.enums.TaskCategory;
+import az.shopery.backoffice_ms.handler.exception.ApplicationException;
+import az.shopery.backoffice_ms.model.dto.response.task.ShopCreationRequestResponseDto;
+import az.shopery.backoffice_ms.model.dto.response.task.SupportTicketResponseDto;
+import az.shopery.backoffice_ms.model.dto.response.task.TaskResponseDto;
+import az.shopery.backoffice_ms.model.dto.shared.TaskCreatorDto;
+import az.shopery.backoffice_ms.model.entity.task.ShopCreationRequestEntity;
+import az.shopery.backoffice_ms.model.entity.task.SupportTicketEntity;
+import az.shopery.backoffice_ms.model.entity.task.TaskEntity;
+import az.shopery.backoffice_ms.utils.enums.TaskCategory;
 import org.springframework.stereotype.Component;
 
 @Component
