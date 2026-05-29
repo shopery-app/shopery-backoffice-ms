@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface AwsClient {
 
     @GetMapping("/api/v1/aws/presigned-url")
-    ResponseEntity<String> getPresignedUrl(@RequestParam String fileKey);
+    ResponseEntity<String> getPresignedUrl(@RequestParam(required = false) String fileKey);
 }
