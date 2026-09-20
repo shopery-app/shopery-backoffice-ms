@@ -3,7 +3,6 @@ package az.shopery.backoffice_ms.service.impl;
 import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.first;
 import static az.shopery.backoffice_ms.utils.common.NameMapperHelper.last;
 
-import az.shopery.backoffice_ms.client.AwsClient;
 import az.shopery.backoffice_ms.handler.exception.ApplicationException;
 import az.shopery.backoffice_ms.handler.exception.ResourceNotFoundException;
 import az.shopery.backoffice_ms.kafka.producer.NotificationProducer;
@@ -26,6 +25,7 @@ import az.shopery.backoffice_ms.repository.ShopRepository;
 import az.shopery.backoffice_ms.repository.TaskRepository;
 import az.shopery.backoffice_ms.repository.UserRepository;
 import az.shopery.backoffice_ms.service.AdminService;
+import az.shopery.backoffice_ms.utils.common.FilenetClientHelper;
 import az.shopery.backoffice_ms.utils.enums.NotificationType;
 import az.shopery.backoffice_ms.utils.enums.OrderStatus;
 import az.shopery.backoffice_ms.utils.enums.RequestStatus;
@@ -48,12 +48,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-    private final AwsClient awsClient;
     private final TaskMapper taskMapper;
     private final UserRepository userRepository;
     private final ShopRepository shopRepository;
     private final TaskRepository taskRepository;
     private final OrderRepository orderRepository;
+    private final FilenetClientHelper filenetClientHelper;
     private final NotificationProducer notificationProducer;
 
     @Override
@@ -195,18 +195,21 @@ public class AdminServiceImpl implements AdminService {
     }
 
     private UserProfileResponseDto mapToDto(UserEntity userEntity) {
-        String presignedUrl = awsClient.getPresignedUrl(userEntity.getProfilePhotoUrl()).getBody();
-
-        return UserProfileResponseDto.builder()
+        var userProfileResponseDto = UserProfileResponseDto.builder()
                 .id(userEntity.getId())
                 .firstName(first(userEntity.getName()))
                 .lastName(last(userEntity.getName()))
                 .email(userEntity.getEmail())
                 .phone(userEntity.getPhone())
                 .dateOfBirth(userEntity.getDateOfBirth())
-                .profilePhotoUrl(presignedUrl)
                 .createdAt(userEntity.getCreatedAt())
                 .build();
+
+        if (Objects.nonNull(userEntity.getProfilePhotoId())) {
+            userProfileResponseDto.setProfilePhoto(filenetClientHelper.getFile(userEntity.getProfilePhotoId()));
+        }
+
+        return userProfileResponseDto;
     }
 
     private AdminShopResponseDto mapToAdminShopDto(AdminShopProjection adminShopProjection) {

@@ -9,5 +9,4 @@ class BackofficeMsApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
