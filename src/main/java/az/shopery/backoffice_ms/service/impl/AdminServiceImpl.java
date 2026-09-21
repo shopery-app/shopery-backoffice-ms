@@ -127,7 +127,7 @@ public class AdminServiceImpl implements AdminService {
 
         notificationProducer.send(
                 new NotificationEvent(
-                        userEmail,
+                        userEntity.getEmail(),
                         NotificationType.SHOP_APPROVED,
                         Map.of(
                                 "userName",shopCreationRequestEntity.getCreatedBy().getName(),
@@ -152,7 +152,7 @@ public class AdminServiceImpl implements AdminService {
 
         notificationProducer.send(
                 new NotificationEvent(
-                        userEmail,
+                        shopCreationRequestEntity.getCreatedBy().getEmail(),
                         NotificationType.SHOP_REJECTED,
                         Map.of(
                                 "userName",shopCreationRequestEntity.getCreatedBy().getName(),
