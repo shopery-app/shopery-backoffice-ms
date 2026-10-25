@@ -142,6 +142,9 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public SuccessResponse<Void> reject(String id, String userEmail, ShopCreationRequestRejectDto shopCreationRequestRejectDto) {
         ShopCreationRequestEntity shopCreationRequestEntity = getShopCreationRequestEntity(id, userEmail);
+        if (!shopCreationRequestEntity.getRequestStatus().equals(RequestStatus.PENDING)) {
+            throw new ApplicationException("Shop creation request is not pending!");
+        }
 
         shopCreationRequestEntity.setRequestStatus(RequestStatus.REJECTED);
         shopCreationRequestEntity.setRejectionReason(shopCreationRequestRejectDto.getReason());
